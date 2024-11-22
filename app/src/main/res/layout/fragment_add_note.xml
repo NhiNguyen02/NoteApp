@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp"
+        tools:context=".fragments.AddNoteFragment">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/addNoteHeading"
+            android:text="Add Note"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/red"
+            android:layout_alignParentTop="true"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:id="@+id/addNoteTitle"
+            android:layout_below="@+id/addNoteHeading"
+            android:hint="Tiêu đề"
+            android:textSize="24dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/border"
+            android:padding="10dp"
+            android:maxLines="1" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/addNoteDesc"
+            android:layout_below="@+id/addNoteTitle"
+            android:layout_marginTop="10dp"
+            android:hint="Nội dung"
+            android:gravity="top"
+            android:textSize="18sp"
+            android:padding="10dp"
+            android:background="@drawable/border"/>
+    </RelativeLayout>
+
+</layout>

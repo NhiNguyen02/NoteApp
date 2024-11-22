@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        orientation="veritical"
+        android:padding="10dp"
+        tools:context=".fragments.EditNoteFragment">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editNoteHeading"
+            android:text="Edit Note"
+            android:textSize="30sp"
+            android:padding="10dp"
+            android:textColor="@color/red"
+            android:textStyle="bold"
+            android:layout_alignParentTop="true"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:id="@+id/editNoteTitle"
+            android:hint="edit"
+            android:layout_below="@+id/editNoteHeading"
+            android:textSize="24sp"
+            android:padding="10dp"
+            android:background="@drawable/border"
+            android:maxLines="1"
+            android:layout_marginTop="10dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/editNoteDesc"
+            android:layout_below="@+id/editNoteTitle"
+            android:hint="noi dung"
+            android:gravity="top"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:textSize="18sp"
+            android:background="@drawable/border"/>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/editNoteFab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:clickable="true"
+            android:backgroundTint="@color/pink"
+            android:tintMode="@color/white"
+            android:src="@drawable/baseline_done_24"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:contentDescription="editFab" />
+    </RelativeLayout>
+
+</layout>
