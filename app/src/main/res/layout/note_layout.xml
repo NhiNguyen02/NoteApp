@@ -6,36 +6,45 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        app:cardElevation="6dp"
-        app:cardCornerRadius="10dp">
+
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginBottom="6dp"
+        android:layout_marginTop="6dp"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="4dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:background="@drawable/border"
-            android:padding="16dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:id="@+id/noteTitle"
-                android:layout_weight="200"
-                android:textColor="@color/red"
-                android:text="Note Title"
-                android:textStyle="bold"
-                android:textSize="18sp"/>
+            android:padding="10dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/noteTitle"
+
+                android:textColor="@color/red"
+                android:text="Note Title"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:padding="6dp"/>
+
+            <TextView
                 android:id="@+id/noteDesc"
-                android:layout_marginTop="8dp"
-                android:maxHeight="170dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:maxLines="4"
+                android:ellipsize="end"
                 android:text="Description"
                 android:textSize="14sp"
-                android:textColor="@color/pink"/>
+                android:textColor="@color/pink" />
+
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
