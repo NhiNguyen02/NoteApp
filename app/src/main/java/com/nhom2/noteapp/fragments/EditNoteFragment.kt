@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import android.app.AlertDialog
+import android.text.format.DateFormat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
@@ -20,6 +21,7 @@ import com.nhom2.noteapp.R
 import com.nhom2.noteapp.databinding.FragmentEditNoteBinding
 import com.nhom2.noteapp.model.Note
 import com.nhom2.noteapp.viewmodel.NoteViewModel
+import java.util.Date
 
 
 class EditNoteFragment : Fragment(R.layout.fragment_edit_note), MenuProvider {
@@ -47,19 +49,60 @@ class EditNoteFragment : Fragment(R.layout.fragment_edit_note), MenuProvider {
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
         notesViewModel = (activity as MainActivity).noteViewModel
         currentNote = args.note!!
+        var priority: String = currentNote.priority
         binding.editNoteTitle.setText(currentNote.noteTitle)
         binding.editNoteDesc.setText(currentNote.noteDesc)
 
+        // Thiết lập trạng thái nút ưu tiên đã lưu
+        when (currentNote.priority){
+            "1" -> {
+                binding.pRed.setImageResource(R.drawable.baseline_done_24)
+                binding.pYellow.setImageResource(0)
+                binding.pGreen.setImageResource(0)
+            }
+            "2" -> {
+                binding.pYellow.setImageResource(R.drawable.baseline_done_24)
+                binding.pRed.setImageResource(0)
+                binding.pGreen.setImageResource(0)
+            }
+            "3" -> {
+                binding.pGreen.setImageResource(R.drawable.baseline_done_24)
+                binding.pYellow.setImageResource(0)
+                binding.pRed.setImageResource(0)
+            }
+        }
+        binding.pRed.setOnClickListener {
+            binding.pRed.setImageResource(R.drawable.baseline_done_24)
+            binding.pYellow.setImageResource(0)
+            binding.pGreen.setImageResource(0)
+            priority = "1"
+        }
+        binding.pYellow.setOnClickListener {
+            binding.pYellow.setImageResource(R.drawable.baseline_done_24)
+            binding.pRed.setImageResource(0)
+            binding.pGreen.setImageResource(0)
+            priority = "2"
+        }
+        binding.pGreen.setOnClickListener {
+            binding.pGreen.setImageResource(R.drawable.baseline_done_24)
+            binding.pYellow.setImageResource(0)
+            binding.pRed.setImageResource(0)
+            priority = "3"
+        }
         binding.editNoteFab.setOnClickListener{
             val noteTitle = binding.editNoteTitle.text.toString().trim()
             val noteDesc = binding.editNoteDesc.text.toString().trim()
+            val d = Date()
+            val noteDate: CharSequence = DateFormat.format("MMMM d, yyyy ", d.time)
+
             if(noteTitle.isNotEmpty()){
-                val note = Note(currentNote.id, noteTitle, noteDesc)
+                val note = Note(currentNote.id, noteTitle, noteDesc, noteDate.toString().trim(), priority)
                 notesViewModel.updateNote(note)
                 view.findNavController().popBackStack(R.id.homeFragment, false)
             }else{
                 Toast.makeText(context, "Chưa nhập thông tin", Toast.LENGTH_SHORT).show()
             }
+
         }
     }
 

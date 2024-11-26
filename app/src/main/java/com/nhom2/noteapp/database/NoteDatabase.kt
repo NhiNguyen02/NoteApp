@@ -28,5 +28,9 @@ abstract class NoteDatabase:RoomDatabase() {
                 NoteDatabase::class.java,
                 name = "note_db"
             ).build()
+
+        private fun deleteDatabase(context: Context) {
+            context.deleteDatabase("note_db")
+        }
     }
 }

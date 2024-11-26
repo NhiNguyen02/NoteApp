@@ -1,5 +1,6 @@
 package com.nhom2.noteapp.fragments
 
+import android.text.format.DateFormat
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -18,6 +19,7 @@ import com.nhom2.noteapp.R
 import com.nhom2.noteapp.databinding.FragmentAddNoteBinding
 import com.nhom2.noteapp.model.Note
 import com.nhom2.noteapp.viewmodel.NoteViewModel
+import java.util.Date
 
 
 class AddNoteFragment : Fragment(R.layout.fragment_add_note), MenuProvider {
@@ -26,6 +28,7 @@ class AddNoteFragment : Fragment(R.layout.fragment_add_note), MenuProvider {
     private val binding get() = addNoteBinding!!
     private lateinit var notesViewModel: NoteViewModel
     private lateinit var addNoteView: View
+    private var priority: String ="1"
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,21 +45,46 @@ class AddNoteFragment : Fragment(R.layout.fragment_add_note), MenuProvider {
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
         notesViewModel = (activity as MainActivity).noteViewModel
         addNoteView = view
+        // Thiết lập các sự kiện click
+        binding.pRed.setOnClickListener {
+            binding.pRed.setImageResource(R.drawable.baseline_done_24)
+            binding.pYellow.setImageResource(0)
+            binding.pGreen.setImageResource(0)
+            priority = "1"
+        }
+
+        binding.pYellow.setOnClickListener {
+            binding.pYellow.setImageResource(R.drawable.baseline_done_24)
+            binding.pRed.setImageResource(0)
+            binding.pGreen.setImageResource(0)
+            priority = "2"
+        }
+
+        binding.pGreen.setOnClickListener {
+            binding.pGreen.setImageResource(R.drawable.baseline_done_24)
+            binding.pYellow.setImageResource(0)
+            binding.pRed.setImageResource(0)
+            priority = "3"
+        }
     }
 
     private fun saveNote(view: View){
         val noteTitle = binding.addNoteTitle.text.toString().trim()
         val noteDesc = binding.addNoteDesc.text.toString().trim()
+        val d = Date()
+        val noteDate: CharSequence = DateFormat.format("MMMM d, yyyy ", d.time)
 
         if(noteTitle.isNotEmpty()){
-            val note = Note(0, noteTitle, noteDesc)
+            val note = Note(0, noteTitle, noteDesc, noteDate.toString().trim(),priority)
             notesViewModel.addNote(note)
 
             Toast.makeText(addNoteView.context, "Đã Lưu", Toast.LENGTH_SHORT).show()
             view.findNavController().popBackStack(R.id.homeFragment,false)
-        }else{
+        } else{
             Toast.makeText(addNoteView.context, "Chưa nhập thông tin", Toast.LENGTH_SHORT).show()
         }
+
+
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {

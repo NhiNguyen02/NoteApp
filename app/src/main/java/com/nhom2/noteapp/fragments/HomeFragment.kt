@@ -1,5 +1,7 @@
 package com.nhom2.noteapp.fragments
 
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +10,8 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -46,6 +50,26 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         binding.addNoteFab.setOnClickListener{
             it.findNavController().navigate(R.id.action_homeFragment_to_addNoteFragment)
         }
+
+        //Filter
+        binding.filterHigh.setOnClickListener {
+            notesViewModel.getHighNotes().observe(viewLifecycleOwner){note ->
+                noteAdapter.differ.submitList(note)
+                updateUI(note)
+            }
+        }
+        binding.filterMedium.setOnClickListener {
+            notesViewModel.getMediumNotes().observe(viewLifecycleOwner){note ->
+                noteAdapter.differ.submitList(note)
+                updateUI(note)
+            }
+        }
+        binding.filterLow.setOnClickListener {
+            notesViewModel.getLowNotes().observe(viewLifecycleOwner){note ->
+                noteAdapter.differ.submitList(note)
+                updateUI(note)
+            }
+        }
     }
     private fun updateUI(note: List<Note>?){
         if(note!=null){
@@ -62,7 +86,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
     private fun setupHomeRecyclerView(){
         noteAdapter = NoteAdapter()
         binding.homeRecyclerView.apply {
-            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL).apply {
+                    gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
+                }
+
+
             setHasFixedSize(true)
             adapter = noteAdapter
 
@@ -72,6 +100,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
                 noteAdapter.differ.submitList(note)
                 updateUI(note)
             }
+            val a = notesViewModel.getAllNote()
         }
     }
 
@@ -98,12 +127,17 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         homeBinding = null
     }
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
         menu.clear()
         menuInflater.inflate(R.menu.home_menu, menu)
         val menuSearch = menu.findItem(R.id.searchMenu).actionView as SearchView
         menuSearch.isSubmitButtonEnabled = false
         menuSearch.setOnQueryTextListener(this)
+        // Lấy EditText từ SearchView để thay đổi màu con trỏ
+        val searchEditText = menuSearch.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
+        searchEditText.setTextColor(Color.BLACK)  // Màu văn bản
+        searchEditText.setTextCursorDrawable(R.drawable.custom_cursor)  // Thay đổi màu con trỏ
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {

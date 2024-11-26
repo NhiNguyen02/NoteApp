@@ -22,4 +22,7 @@ class NoteViewModel(app: Application, private val noteRepository: NoteRepository
         }
     fun getAllNote() = noteRepository.getAllNotes()
     fun searchNote(query:String?) = noteRepository.searchNote(query)
+    fun getHighNotes() = noteRepository.getHighNotes()
+    fun getMediumNotes() = noteRepository.getMediumNotes()
+    fun getLowNotes() = noteRepository.getLowNotes()
 }

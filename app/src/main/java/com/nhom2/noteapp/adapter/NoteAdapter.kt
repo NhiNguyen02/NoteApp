@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nhom2.noteapp.databinding.NoteLayoutBinding
 import com.nhom2.noteapp.fragments.HomeFragmentDirections
 import com.nhom2.noteapp.model.Note
+import com.nhom2.noteapp.R
 
 class NoteAdapter:RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
     class NoteViewHolder(val itemBinding: NoteLayoutBinding): RecyclerView.ViewHolder(itemBinding.root)
@@ -52,7 +53,15 @@ class NoteAdapter:RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
         } else {
             currentNote.noteDesc
         }
-
+        val priority = currentNote.priority
+        val noteDate = currentNote.noteDate
+        when (currentNote.priority){
+            "1" -> holder.itemBinding.noteDots.setBackgroundResource(R.drawable.red_dot)
+            "2" -> holder.itemBinding.noteDots.setBackgroundResource(R.drawable.yellow_dot)
+            "3" -> holder.itemBinding.noteDots.setBackgroundResource(R.drawable.green_dot)
+            else -> holder.itemBinding.noteDots.setBackgroundResource(0)
+        }
+        holder.itemBinding.noteDate.text = noteDate
         holder.itemBinding.noteTitle.text = limitedTitle
         holder.itemBinding.noteDesc.text = limitedDesc
 
